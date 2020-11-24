@@ -16,7 +16,7 @@ declare
 begin
 	for rec in (SELECT * FROM pg_event_trigger_ddl_commands() WHERE command_tag in ('CREATE TABLE','CREATE TABLE AS','ALTER TABLE')) loop
     --
-      select (regexp_matches(replace(rec.object_identity,'"',''),'[A-Za-z0-9]+\.?[A-Za-z0-9]*'))[1] into tname
+      select (regexp_matches(replace(rec.object_identity,'"',''),'[A-Za-z0-9]+[\.|\_]?[A-Za-z0-9\_]*'))[1] into tname
        limit 1;
       SELECT pg_attribute.attname, format_type(pg_attribute.atttypid, pg_attribute.atttypmod) 
         INTO pk, pktype
